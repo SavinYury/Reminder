@@ -10,7 +10,7 @@ import pygame
 def set_reminder():
     time_reminder = sd.askstring(title="Укажите время напоминания", prompt="Введите время (чч:мм)")
     if time_reminder:
-        try:
+        try: # Попытаемся создать проверку на исключение
             hour, minute = time_reminder.split(":") # Создаем список часы_минуты через двоеточие
             hour = int(hour) # Переводим переменную из строчного значения в целое число
             minute = int(minute) # Переводим переменную из строчного значения в целое число
@@ -18,14 +18,13 @@ def set_reminder():
             print(now_time)
             r_time = now_time.replace(hour=hour, minute=minute, second=0) # Создаем переменную во время которой случится напоминания
             print(r_time)
-            mb.showinfo(title="Успех", message=f"Напоминание установлено на {hour}:{minute}")
+            mb.showinfo(title="Успех", message=f"Напоминание установлено на {hour}:{minute}") # Информируем что напоминание установлено
             check_time()
-        except ValueError:
+        except ValueError: # При вводе значений не в режиме часов минут обрабатываем ошибку
             mb.showerror(title="Ошибка", message=f"Неправильно указано время")
 
 # Создаем функцию проверки текущего времени
 # и сравнения со временем напоминания
-
 def check_time():
     global r_time
     if r_time:
