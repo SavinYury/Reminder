@@ -1,22 +1,22 @@
 ### ПРОГРАММА НАПОМИНАНИЕ
-from tkinter import *
+from tkinter import * # Импортируем из tkinter все функции
 from tkinter import simpledialog as sd
 from tkinter import messagebox as mb
 import time
 import datetime
 import pygame
 
-# Создаем функцию
+# Создаем функцию установки времени срабатывания
 def set_reminder():
-    time_reminder = sd.askstring(title="Укажите время напоминания", prompt="Введите время (чч : мм)")
+    time_reminder = sd.askstring(title="Укажите время напоминания", prompt="Введите время (чч:мм)")
     if time_reminder:
         try:
-            hour, minute = time_reminder.split(":")
-            hour = int(hour)
-            minute = int(minute)
-            now_time = datetime.datetime.now()
+            hour, minute = time_reminder.split(":") # Создаем список часы_минуты через двоеточие
+            hour = int(hour) # Переводим переменную из строчного значения в целое число
+            minute = int(minute) # Переводим переменную из строчного значения в целое число
+            now_time = datetime.datetime.now() # Создаем переменную текущего времени от которого пойдет отсчет
             print(now_time)
-            r_time = now_time.replace(hour+hour, minute+minute, second=0)
+            r_time = now_time.replace(hour=hour, minute=minute, second=0) # Создаем переменную во время которой случится напоминания
             print(r_time)
             mb.showinfo(title="Успех", message=f"Напоминание установлено на {hour}:{minute}")
             check_time()
@@ -44,16 +44,19 @@ def play_music():
 
 r_time = None
 
+### Создаем графический интерфейс
 window = Tk()
-window.title("Напоминание")
-width_d = window.winfo_screenwidth()
-heidth_d = window.winfo_screenheight()
-window.geometry(f"400x200+{width_d//2-200}+{heidth_d//2-100}")
+window.title("Напоминание") # Меняем название нашего всплывающего окна
+width_d = window.winfo_screenwidth() # Создаем переменную запрашивающую ширину подключенного монитора
+heidth_d = window.winfo_screenheight() # Создаем переменную запрашивающую высоту подключенного монитора
+window.geometry(f"400x200+{(width_d//2)-200}+{(heidth_d//2)-100}") # Располагаем в центре окна
 
-l = Label(window, text = "Нажмите на кнопку и установите напоминание на любое время")
+### Создаем метку
+l = Label(window, text = "--Нажмите на кнопку и установите напоминание на любое время--")
 l.pack(pady=10)
 
+### Создаем кнопку
 btn = Button(window, text = "Установить напоминание", command=set_reminder)
-btn.pack()
+btn.pack(pady=10)
 
 window.mainloop()
