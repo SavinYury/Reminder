@@ -4,7 +4,8 @@ from tkinter import simpledialog as sd
 from tkinter import messagebox as mb
 import time
 import datetime
-import pygame
+#import pygame
+
 
 # Создаем функцию установки времени срабатывания
 def set_reminder():
@@ -16,6 +17,7 @@ def set_reminder():
             minute = int(minute) # Переводим переменную из строчного значения в целое число
             now_time = datetime.datetime.now() # Создаем переменную текущего времени от которого пойдет отсчет
             print(now_time)
+            global r_time # Поскольку переменная r_time используется в двух функциях назначаем ее глобальной
             r_time = now_time.replace(hour=hour, minute=minute, second=0) # Создаем переменную во время которой случится напоминания
             print(r_time)
             mb.showinfo(title="Успех", message=f"Напоминание установлено на {hour}:{minute}") # Информируем что напоминание установлено
@@ -23,22 +25,22 @@ def set_reminder():
         except ValueError: # При вводе значений не в режиме часов минут обрабатываем ошибку
             mb.showerror(title="Ошибка", message=f"Неправильно указано время")
 
-# Создаем функцию постоянной проверки текущего времени
-# и сравнения со временем напоминания
+# Создаем функцию постоянной проверки текущего времени и сравнения со временем напоминания
 def check_time():
     global r_time # Поскольку переменная r_time используется в двух функциях назначаем ее глобальной
     if r_time: # Создаем цикл проверки как только в переменной r_time появилось значение
         now = time.time() # В переменной текущего времени
+        print(now)
         if now >= r_time.timestamp(): # Цикл если текущее время now больше или равно установленного времени в напоминании r_time
             print("Играет музыка") # То срабатывает функция включения музыки
             r_time = None # После срабатывания напоминания обнуляем переменную установленного времени r_time
         window.after(1000, check_time) # Задаем проверку значений времени каждые 1000 миллисекунд и вызываем функцию check_time
 
 ### Создаем функцию для проигрывания музыки
-def play_music():
-    pygame.mixer.init()
-    pygame.mixer.music.load("")
-    pygame.mixer.music.play()
+#def play_music():
+#    pygame.mixer.init() # Создаем шаблон миксера в pygame
+#    pygame.mixer.music.load("") # Команда на загрузку музыки в миксер
+#    pygame.mixer.music.play() # Даем команду на проигрывание музыкального файла
 
 
 r_time = None # Создали (обозначили) переменную и присвоили какое-то нулевое значение
